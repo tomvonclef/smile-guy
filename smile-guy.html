@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Use the cursor to move the smile guy!</title>
+    <script src="js/jquery-2.0.3.js"></script>
+    <script> window.ScriptSrc = 'js/'; </script>
+    <script src="js/quib-console.js"></script>
+</head>
+
+<body>
+    <div id="content"></div>
+</body>
+
+<script>
+$(document).ready(function() {
+    'use strict';
+
+    var pixelRatio = (window.devicePixelRatio === 2) ? 2 : 1;
+    var cons = new Console(pixelRatio);
+    document.getElementById('content').appendChild(cons.canvas);
+
+    function SmileGuy() {
+        var that = this;
+
+        var row = 5;
+        var col = 10;
+
+        this.Refresh = function() {
+            cons.cls();
+            cons.locate(row, col);
+            cons.print(1);
+        };
+
+        this.MoveLeft = function() {
+            col--;
+            that.Refresh();
+        };
+
+        this.MoveRight = function() {
+            col++;
+            that.Refresh();
+        };
+
+        this.MoveUp = function() {
+            row--;
+            that.Refresh();
+        };
+
+        this.MoveDown = function() {
+            row++;
+            that.Refresh();
+        };
+    }
+
+    var smileGuy = new SmileGuy();
+
+    setTimeout(function() {
+        smileGuy.Refresh();
+    }, 100);
+
+    $("#content canvas").click();
+
+    $("#content canvas").keydown(function(e) {
+        if(e.keyCode == 37) { // left
+            smileGuy.MoveLeft();
+        }
+        else if(e.keyCode == 39) { // right
+            smileGuy.MoveRight();
+        }
+        else if(e.keyCode == 38) { // up
+            smileGuy.MoveUp();
+        }
+        else if(e.keyCode == 40) { // down
+            smileGuy.MoveDown();
+        }
+    });
+});
+</script>
+
+</html>
